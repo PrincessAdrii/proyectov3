@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('apellidoM',50);
             $table->string('sexo',1);
             $table->string('email',50);
-            $table->string('semestreActual')->default('semestre 1');
+            $table->tinyInteger('semestreActual')->default('1');
             $table->string('idCarrera',15);
             $table->foreign('idCarrera')->references('idCarrera')->on('carreras');
 

@@ -104,35 +104,7 @@
     @endif
 
     <!-- Formulario de Turno -->
-    @if ($accion == 'E')
-    <div class="row mt-4">
-        <div class="col-md-6 mb-4">
-            <label for="fecha" class="form-label">Fecha del Turno</label>
-            <input type="date" class="form-control" id="fecha" name="fecha" value="{{ old('fecha', $turno->fecha ?? '') }}" required>
-        </div>
-
-        <div class="col-md-6 mb-4">
-            <label for="hora" class="form-label">Hora del Turno</label>
-            <input type="time" class="form-control" id="hora" name="hora" value="{{ old('hora', $turno->hora ?? '') }}" required>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-6 mb-4">
-            <label for="inscripcion" class="form-label">Estado</label>
-            <select class="form-control" id="inscripcion" name="inscripcion" required>
-                <option value="Inscripción" {{ old('inscripcion', $turno->inscripcion ?? '') == 'Inscripción' ? 'selected' : '' }}>Inscripción</option>
-                <option value="Reinscripción" {{ old('inscripcion', $turno->inscripcion ?? '') == 'Reinscripción' ? 'selected' : '' }}>Reinscripción</option>
-            </select>
-        </div>
-    </div>
-
-    @if(session('error'))
-    <div class="alert alert-danger">
-        {{ session('error') }}
-    </div>
-@endif
-    @endif
+ 
 
     <!-- Botón de Enviar -->
     <div class="text-center mt-4">

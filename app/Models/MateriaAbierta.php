@@ -18,19 +18,21 @@ class MateriaAbierta extends Model
     ];
  
    
-    public function carrera(): BelongsTo
-    {
-        return $this->belongsTo(Carrera::class, 'idCarrera');
-    }
- 
-    public function materia(): BelongsTo
-    {
-        return $this->belongsTo(Materia::class, 'idMateria');
-    }
- 
-    public function periodo(): BelongsTo
-    {
-        return $this->belongsTo(Periodo::class, 'idPeriodo');
-    }
+    // En MateriaAbierta.php
+public function materia()
+{
+    return $this->belongsTo(Materia::class, 'idMateria');
+}
+
+public function carrera()
+{
+    return $this->belongsTo(Carrera::class, 'idCarrera');
+}
+
+public function periodo()
+{
+    return $this->belongsTo(Periodo::class, 'idPeriodo');
+}
+
 }
  

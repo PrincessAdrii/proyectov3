@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('turnos', function (Blueprint $table) {
-            $table->string("idTurno")->primary();
-            $table->string("fecha");
-            $table->string("hora");
-            $table->string("inscripcion")->default('inscripcion');
-            $table->string('noctrl',15);
+        Schema::create('inscripcions', function (Blueprint $table) {
+            $table->string('idInscripcion');
+            $table->string('estado');
+            $table->string('noctrl',8);
             $table->foreign('noctrl')->references('noctrl')->on('alumnos');
-            $table->unique(['fecha', 'hora']); 
+
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('turnos');
+        Schema::dropIfExists('inscripcions');
     }
 };

@@ -21,25 +21,50 @@ class AlumnoController extends Controller
             'apellidoM' =>['required'],
             'sexo'      =>['required'],
             'email' =>['required'],
-            'semestreActual' => ['required'],
+          
             'idCarrera'      =>['required'],
 
         ];
     }
 
-    public function index()
-    {
+    // public function index()
+    // {
         
-        $alumnos= Alumno::all(); 
-        $alumno=new Alumno;
-        $carreras=Carrera::all();
-        $turnos = Turno::paginate(3);
+    //     $alumnos= Alumno::all(); 
+    //     $alumno=new Alumno;
+    //     $carreras=Carrera::all();
+    //     $turnos = Turno::paginate(3);
 
-        $accion='C';
-        $txtbtn='Guardar';
-        $des='';
-        return view("Alumnos2/index",compact("alumnos",'alumno',"accion",'txtbtn','des','carreras','turnos'));
+    //     $accion='C';
+    //     $txtbtn='Guardar';
+    //     $des='';
+    //     return view("Alumnos2/index",compact("alumnos",'alumno',"accion",'txtbtn','des','carreras','turnos'));
+    // }
+
+    public function index()
+{
+    // Verificar si el usuario está autenticado
+    if (session()->has('user')) {
+        $user = session('user');
+        $alumno = Alumno::where('noctrl', $user->noctrl)->first(); // Filtrar por noctrl
+
+        // Redirigir a la vista del alumno autenticado
+        return view('/Alumnos2/inicioAlumnos', compact('alumno'));
     }
+
+    // Si no está autenticado, mostrar la lista completa de alumnos
+    $alumnos = Alumno::all();
+    $alumno = new Alumno;
+    $carreras = Carrera::all();
+    $turnos = Turno::paginate(3);
+
+    $accion = 'C';
+    $txtbtn = 'Guardar';
+    $des = '';
+
+    return view('Alumnos2/index', compact('alumnos', 'alumno', 'accion', 'txtbtn', 'des', 'carreras', 'turnos'));
+}
+
 
     public function create()
     {
@@ -102,25 +127,57 @@ class AlumnoController extends Controller
     //     return view("Alumnos2.form", compact('alumnos', 'alumno', 'accion', 'txtbtn', 'des', 'carreras','turnos','turno'));
     // }
 
+    // public function edit(Alumno $alumno)
+    // {
+    //     // Obtener todas las carreras para el dropdown
+    //     $carreras = Carrera::all();
+    //     $alumnos = Alumno::all();
+    //     // Obtener los turnos paginados
+    //     $turnos = Turno::paginate(3);
+    
+    //     // Obtener el turno asociado al alumno (si existe)
+    //     $turno = $alumno->turno ?? new Turno();
+    
+    //     // Variables para la vista
+    //     $accion = 'E';
+    //     $txtbtn = 'Actualizar';
+    //     $des = 'readonly';
+    
+    //     return view("Alumnos2.form", compact('alumno','alumnos', 'carreras', 'turnos', 'turno', 'accion', 'txtbtn', 'des'));
+    // }
+
     public function edit(Alumno $alumno)
-    {
-        // Obtener todas las carreras para el dropdown
+{
+    // Verificar si hay una sesión activa
+    if (session()->has('user')) {
         $carreras = Carrera::all();
-        $alumnos = Alumno::all();
-        // Obtener los turnos paginados
-        $turnos = Turno::paginate(3);
-    
-        // Obtener el turno asociado al alumno (si existe)
-        $turno = $alumno->turno ?? new Turno();
-    
-        // Variables para la vista
         $accion = 'E';
-        $txtbtn = 'Actualizar';
-        $des = 'readonly';
-    
-        return view("Alumnos2.form", compact('alumno','alumnos', 'carreras', 'turnos', 'turno', 'accion', 'txtbtn', 'des'));
+    $txtbtn = 'Actualizar';
+    $des = 'readonly';
+        // Redirigir al formulario para usuarios autenticados
+        return view("/Alumnos2/formAlum", compact('alumno','accion','txtbtn','des','carreras'));
     }
+
+    // Si no hay sesión activa, mostrar la vista estándar
+    // Obtener todas las carreras para el dropdown
+    $carreras = Carrera::all();
+    $alumnos = Alumno::all();
+    // Obtener los turnos paginados
+    $turnos = Turno::paginate(3);
+
+    // Obtener el turno asociado al alumno (si existe)
+    $turno = $alumno->turno ?? new Turno();
+
+    // Variables para la vista
+    $accion = 'E';
+    $txtbtn = 'Actualizar';
+    $des = 'readonly';
+
+    return view("Alumnos2.form", compact('alumno', 'alumnos', 'carreras', 'turnos', 'turno', 'accion', 'txtbtn', 'des'));
+}
+
   
+
     // public function update(Request $request, Alumno $alumno)
     // {   
        
@@ -128,11 +185,83 @@ class AlumnoController extends Controller
     //     $alumno->update($val);
     //     return redirect()->route('Alumnos.index');
     // }
+    // public function update(Request $request, Alumno $alumno)
+    // {
+    //     // Verifica si llega correctamente el alumno
+    //     Log::info('Actualizando alumno:', $alumno->toArray());
+    
+    //     // Validar datos del alumno
+    //     $dataAlumno = $request->validate([
+    //         'nombre' => 'required|max:50',
+    //         'apellidoP' => 'required|max:50',
+    //         'apellidoM' => 'required|max:50',
+    //         'email' => 'required|email|max:50',
+    //         'sexo' => 'required|in:M,F',
+    //         'semestreActual' => 'required',
+    //         'idCarrera' => 'required|exists:carreras,idCarrera',
+    //     ]);
+    
+    //     // Validar datos del turno
+    //     $dataTurno = $request->validate([
+    //         'fecha' => 'required|date',
+    //         'hora' => 'required|date_format:H:i',
+    //         'inscripcion' => 'required|string|max:50',
+    //         'noctrl' => 'required',
+    //     ]);
+    
+    //     // Actualiza los datos del alumno
+    //     $alumno->update($dataAlumno);
+    
+    //     // Buscar el turno asociado al alumno
+    //     $turno = Turno::where('noctrl', $alumno->noctrl)->first();
+    
+    //     if ($turno) {
+    //         // Verificar si la combinación de fecha y hora ya existe en otro turno
+    //         $turnoExistente = Turno::where('fecha', $dataTurno['fecha'])
+    //                                ->where('hora', $dataTurno['hora'])
+    //                                ->where('idTurno', '!=', $turno->idTurno) // Excluir el turno actual
+    //                                ->first();
+    
+    //         if ($turnoExistente) {
+    //             return redirect()->back()
+    //                              ->with('error', 'La combinación de fecha y hora ya está asignada a otro turno. Por favor, elija otra.')
+    //                              ->withInput(); // Mantener los datos ingresados
+    //         }
+    
+    //         // Actualizar el turno existente
+    //         $turno->update($dataTurno);
+    
+    //         return redirect()->route('Alumnos.index')
+    //                          ->with('mensaje', 'Alumno y turno actualizados correctamente.');
+    //     } else {
+    //         return redirect()->route('Alumnos.index')
+    //                          ->with('error', 'No se encontró un turno asignado para este alumno.');
+    //     }
+    // }
+    
     public function update(Request $request, Alumno $alumno)
     {
-        // Verifica si llega correctamente el alumno
-        Log::info('Actualizando alumno:', $alumno->toArray());
+        // Verifica si hay sesión activa
+        if (session()->has('user')) {
+            // Si hay sesión activa, solo actualizar los datos del alumno
+            $dataAlumno = $request->validate([
+                'nombre' => 'required|max:50',
+                'apellidoP' => 'required|max:50',
+                'apellidoM' => 'required|max:50',
+                'email' => 'required|email|max:50',
+                'sexo' => 'required|in:M,F',
+                'semestreActual' => 'required',
+                'idCarrera' => 'required|exists:carreras,idCarrera',
+            ]);
     
+            // Actualiza los datos del alumno
+            $alumno->update($dataAlumno);
+    
+            return redirect()->route('Alumnos.index') // Redirigir a la vista de inicio de alumnos
+                             ->with('mensaje', 'Datos del alumno actualizados correctamente.');
+        }
+    
+        // Si no hay sesión activa, realizar la funcionalidad completa
         // Validar datos del alumno
         $dataAlumno = $request->validate([
             'nombre' => 'required|max:50',
@@ -182,7 +311,6 @@ class AlumnoController extends Controller
         }
     }
     
-
  
    
     public function destroy(Alumno $alumno)

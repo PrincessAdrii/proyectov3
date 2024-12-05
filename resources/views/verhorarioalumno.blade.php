@@ -271,4 +271,12 @@ label,
     @elseif(isset($alumnoHorarios) && $alumnoHorarios->count() == 0)
         <p class="no-horarios">No hay horarios disponibles para el período seleccionado.</p>
     @endif
+
+
+    {{--  --}}
+
+
+    
+
+
 @endsection

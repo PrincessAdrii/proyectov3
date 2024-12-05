@@ -9,6 +9,9 @@ class Pago extends Model
 {
     use HasFactory;
 
+    
+
+
     protected $fillable = [
         'noctrl',
         'tipo_pago',

@@ -7,41 +7,66 @@ use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
+    // public function iniciosA(Request $request)
+    // {
+    //     $noctrl = $request->input('noctrl');
+    //     $nip = $request->input('nip');
+
+    //     // Consulta la tabla AlumnoUsuario
+    //     $user = DB::table('alumno_usuarios')->where('noctrl', $noctrl)->where('nip', $nip)->first();
+
+    //     if ($user) {
+    //         $alumno = DB::table('alumnos')
+    //             ->where('noctrl', $user->noctrl)
+    //             ->first();
+    //         $turno = DB::table('turnos')
+    //             ->where('noctrl', $user->noctrl)
+    //             ->orderBy('created_at', 'desc') // Ordenar por created_at
+    //             ->first();
+
+    //         // Guardar los datos del usuario y del alumno en la sesión
+    //         session([
+    //             'user' => $user,
+    //             'alumno' => $alumno, // Contiene nombre y apellidos
+    //             'turno' => $turno,
+    //         ]);
+    //         return redirect('/inicioAlumnos'); // Redirigir al inicio
+    //     }
+
+    //     // Credenciales incorrectas
+    //     return back()->withErrors(['iniciosA' => 'Número de control o NIP incorrectos']);
+    // }
+
+    // //////////////
     public function iniciosA(Request $request)
-    {
-        $noctrl = $request->input('noctrl');
-        $nip = $request->input('nip');
+{
+    $noctrl = $request->input('noctrl');
+    $nip = $request->input('nip');
 
-        // Consulta la tabla AlumnoUsuario
-        $user = DB::table('alumno_usuarios')->where('noctrl', $noctrl)->where('nip', $nip)->first();
+    // Validar las credenciales
+    $user = DB::table('alumno_usuarios')->where('noctrl', $noctrl)->where('nip', $nip)->first();
 
-        if ($user) {
-            $alumno = DB::table('alumnos')
-                ->where('noctrl', $user->noctrl)
-                ->first();
-            $turno = DB::table('turnos')
-                ->where('noctrl', $user->noctrl)
-                ->orderBy('created_at', 'desc') // Ordenar por created_at
-                ->first();
+    if ($user) {
+        $alumno = DB::table('alumnos')->where('noctrl', $user->noctrl)->first();
 
-            // Guardar los datos del usuario y del alumno en la sesión
-            session([
-                'user' => $user,
-                'alumno' => $alumno, // Contiene nombre y apellidos
-                'turno' => $turno,
-            ]);
-            return redirect('/verhorarioalumno'); // Redirigir al inicio
-        }
+        // Guardar en la sesión
+        session(['user' => $user, 'alumno' => $alumno]);
 
-        // Credenciales incorrectas
-        return back()->withErrors(['iniciosA' => 'Número de control o NIP incorrectos']);
+        // Redirigir al inicio de alumnos con cuenta
+        return redirect()->route('Alumnos.index');
     }
+
+    // Credenciales incorrectas
+    return back()->withErrors(['iniciosA' => 'Número de control o NIP incorrectos']);
+}
+
+//  ///////////////////////////////////
 
     public function cerrarA()
     {
         // Cerrar sesión
         session()->forget('user');
-        return redirect('/verhorarioalumno');
+        return redirect('/inicioAlumnos');
     }
 
     public function registroA(Request $request)

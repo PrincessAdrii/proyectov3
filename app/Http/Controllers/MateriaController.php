@@ -21,6 +21,7 @@ public function __construct(){
         'nombreCorto'   => ['required'],
         'modalidad'   => ['required'],
         'semestre'   => ['required'],
+        'creditos'   => ['required'],
 
         //FK
         'idReticula'       => ['required', 'exists:reticulas,idReticula'],

@@ -19,6 +19,7 @@ class Materia extends Model
         'nombreCorto',
         'modalidad',
         'semestre',
+        'creditos',
         'idReticula',   
     ];
     protected $casts = ['idMateria'=>'string'];

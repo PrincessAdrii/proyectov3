@@ -42,8 +42,11 @@
                             <p class="card-text">
                                 Turno de {{ $turno->inscripcion }}: {{ $turno->fecha }} a las {{ $turno->hora }}
                             </p>
-                            <a href="{{ route('Alumnos.editar', $turno->noctrl) }}" class="btn btn-warning">Ver información</a>
-                         
+                            <div class="d-flex justify-content-between mt-3">
+                                <a href="{{ route('Alumnos.editar', $turno->noctrl) }}" class="btn btn-warning btn-sm">Ver información</a>
+                                <a href="{{ route('documentos.create', $turno->noctrl) }}" class="btn btn-primary btn-sm">Agregar documentación</a>
+
+                            </div>
                         </div>
                     </div>
                 </div>

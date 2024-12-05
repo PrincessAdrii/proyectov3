@@ -31,7 +31,7 @@ use App\Http\Controllers\MateriaAbiertaController;
 // });
 
 
-//RUTAS DE KEREN
+//RUTAS DE KEREN-> TURNOS DE REINSCRIPCION E INSCRIPCION
 Route::get('/Turnos.index', [TurnoController::class, 'index'])->name('Turnos.index');
     Route::get('/Turnos.create', [TurnoController::class, 'create'])->name('Turnos.create');
     Route::post('/Turnos.store', [TurnoController::class, 'store'])->name('Turnos.store');
@@ -47,9 +47,33 @@ Route::get('/Turnos.index', [TurnoController::class, 'index'])->name('Turnos.ind
     Route::get('/Alumnos2.create', [AlumnoController::class, 'create'])->name('Alumnos.create');
     Route::post('/Alumnos2.store', [AlumnoController::class, 'store'])->name('Alumnos.store');
     Route::get('/Alumnos2.editar/{alumno}', [AlumnoController::class, 'edit'])->name('Alumnos.editar');
+
     Route::get('/Alumnos2.ver/{alumno}', [AlumnoController::class, 'show'])->name('Alumnos.ver');
     Route::post('/Alumnos2.eliminar/{alumno}', [AlumnoController::class, 'destroy'])->name('Alumnos.eliminar');
     Route::post('/Alumnos2.update/{alumno}', [AlumnoController::class, 'update'])->name('Alumnos.update');
+
+    Route::get('/Alumnos2/inicioAlumnos', function () {
+        return view('/Alumnos2/inicioAlumnos'); // Vista del formulario de inicio de sesión
+    })->name('/Alumnos2/inicioAlumnos');
+    Route::get('/Alumnos2/formAlum', function () {
+        return view('/Alumnos2/formAlum'); // Vista del formulario de inicio de sesión
+    })->name('/Alumnos2/formAlum');
+    
+
+
+
+//RUTAS DE YESSICA ->DOCUMENTACION
+
+Route::get('/form/{noctrl}', [DocumentoController::class, 'create'])->name('documentos.create');
+Route::post('/form/{noctrl}', [DocumentoController::class, 'store'])->name('documentos.store');
+
+//RUTAS DE YESSICA -> PAGOS
+Route::get('/pagos', [PagoController::class, 'create'])->name('pagos');
+
+Route::post('/pagos', [PagoController::class, 'store'])->name('pagos.store');
+Route::get('/pagos.editar/{noctrl}', [PagoController::class, 'edit'])->name('pagos.edit');
+Route::post('/pagos.update/{noctrl}', [PagoController::class, 'update'])->name('pagos.update');
+
 
 
 // INICIO
@@ -73,6 +97,7 @@ Route::get('/inicios', function () {
 Route::get('/iniciosA', function () {
     return view('iniciosA'); // Vista del formulario de inicio de sesión
 })->name('iniciosA');
+
 
 Route::get('/registro', function () {
     return view('registro'); // Vista del formulario de registro
@@ -100,15 +125,9 @@ Route::get('/verhorarioalumno', [AlumnoHorarioController::class, 'showAlumnoHora
 Route::post('/verhorarioalumno', [AlumnoHorarioController::class, 'verHorarioAlumno'])->name('verhorarioalumno');
 
 
-Route::get('/form', [DocumentoController::class, 'create'])->name('form');
-
-// Procesar los datos enviados desde el formulario
-Route::post('/form', [DocumentoController::class, 'store'])->name('documentos.store');
 
 
-Route::get('/pagos', [PagoController::class, 'create'])->name('pagos');
 
-Route::post('/pagos', [PagoController::class, 'store'])->name('pagos.store');
 
 // INICIO 2
 Route::get('/inicio2', function () {
@@ -388,19 +407,22 @@ Route::post('/Lugares.update/{lugar}', [LugarController::class, 'update'])->name
 
 
 ///////////////////////////////////////////    Materias abiertas     //////////////////////////////////////////////
-Route::get('/MateriasA.index', [MateriaController::class, 'index'])->name('MateriasA.index');    // INDEX
+Route::get('/MateriasA.index', [MateriaAbiertaController::class, 'index'])->name('MateriasA.index');    // INDEX
 
-Route::get('/MateriasA.create', [MateriaController::class, 'create'])->name('MateriasA.create'); // CREATE
-Route::post('/MateriasA.store', [MateriaController::class, 'store'])->name('MateriasA.store');       
+Route::get('/MateriasA.create', [MateriaAbiertaController::class, 'create'])->name('MateriasA.create'); // CREATE
+Route::post('/MateriasA.store', [MateriaAbiertaController::class, 'store'])->name('MateriasA.store');       
 
-Route::get('/MateriasA.edit/{materia}', [MateriaController::class, 'edit'])->name('MateriasA.edit');       // EDIT
-Route::get('/MateriasA.show/{materia}', [MateriaController::class, 'show'])->name('MateriasA.show');       // VER
+Route::get('/MateriasA.edit/{materia}', [MateriaAbiertaController::class, 'edit'])->name('MateriasA.edit');       // EDIT
+Route::get('/MateriasA.show/{materia}', [MateriaAbiertaController::class, 'show'])->name('MateriasA.show');       // VER
 
-Route::post('/MateriasA.destroy/{materia}', [MateriaController::class, 'destroy'])->name('MateriasA.destroy');// DESRTOY
-Route::post('/MateriasA.update/{materia}', [MateriaController::class, 'update'])->name('MateriasA.update');//UPDATE
+Route::post('/MateriasA.destroy/{materia}', [MateriaAbiertaController::class, 'destroy'])->name('MateriasA.destroy');// DESRTOY
+Route::post('/MateriasA.update/{materia}', [MateriaAbiertaController::class, 'update'])->name('MateriasA.update');//UPDATE
     //TUTORIAS
 
     Route::get('/MateriasA.index', [MateriaAbiertaController::class, 'index'])->name('MateriasA.index');       // INDEX
+
+    Route::get('/MateriasA/filter', [MateriaAbiertaController::class, 'filter'])->name('materiasA.filter');
+
        
 
         Route::get('/capacitacion',function (){

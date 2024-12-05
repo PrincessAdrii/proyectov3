@@ -51,5 +51,5 @@
         </tbody>
     </table>
 
-    {{ $materias->links('pagination::bootstrap-4', ['class' => 'pagination-sm']) }}
+    
 </div>

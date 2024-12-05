@@ -175,51 +175,86 @@
     <!-- Contenido -->
     <div class="content">
         <div class="form-container">
+
+
+
+            
+@if ($errors->any())
+@foreach ($errors->all() as $error)
+<div class="alert alert-danger" role="alert">
+   {{$error}}
+  </div>
+@endforeach
+@endif
+
+
+@if ($accion == 'C')
+
+  <form action="{{route('pagos.store')}}" method="POST">
+    
+
+  @elseif ($accion == 'E')
+
+  <form action="{{route('pagos.update', $pago->noctrl)}}" method="POST">
+
+    
+  @endif
+  
+  @csrf
             <h1>Agregar Pago</h1>
-            <form method="POST" action="{{route('pagos.store')}}" enctype="multipart/form-data">
+            {{-- <form method="POST" action="{{route('pagos.store')}}" enctype="multipart/form-data"> --}}
                 <!-- CSRF Token -->
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                 <div class="form-group">
                     <label for="noctrl" class="form-label"><i class="fa-solid fa-user"></i> Número de Control</label>
-                    <input type="text" name="noctrl" id="noctrl" class="form-control" placeholder="Ingresa el número de control del alumno" required>
+                    <input type="text" name="noctrl" id="noctrl" class="form-control" value="{{$alumnos->noctrl}}"
+                           value="{{ old('noctrl', $pago->noctrl ?? '') }}" 
+                           placeholder="Ingresa el número de control del alumno" required>
                 </div>
-
+            
                 <!-- Tipo de Pago -->
                 <div class="form-group">
                     <label for="tipo_pago" class="form-label"><i class="fa-solid fa-credit-card"></i> Tipo de Pago</label>
                     <select name="tipo_pago" id="tipo_pago" class="form-control" required>
-                        <option value="" disabled selected>Selecciona un tipo de pago</option>
-                        <option value="banco">Pago por Banco</option>
-                        <option value="transferencia">Pago por Transferencia</option>
+                        <option value="" disabled {{ old('tipo_pago', $pago->tipo_pago ?? '') == '' ? 'selected' : '' }}>Selecciona un tipo de pago</option>
+                        <option value="banco" {{ old('tipo_pago', $pago->tipo_pago ?? '') == 'banco' ? 'selected' : '' }}>Pago por Banco</option>
+                        <option value="transferencia" {{ old('tipo_pago', $pago->tipo_pago ?? '') == 'transferencia' ? 'selected' : '' }}>Pago por Transferencia</option>
                     </select>
                 </div>
-
+            
                 <!-- Monto -->
                 <div class="form-group">
                     <label for="monto_pago" class="form-label"><i class="fa-solid fa-dollar-sign"></i> Monto</label>
-                    <input type="number" name="monto_pago" id="monto_pago" class="form-control" placeholder="Ingresa el monto" required>
+                    <input type="number" name="monto_pago" id="monto_pago" class="form-control" 
+                           value="{{ old('monto_pago', $pago->monto_pago ?? '') }}" 
+                           placeholder="Ingresa el monto" required>
                 </div>
-
+            
                 <!-- Fecha -->
                 <div class="form-group">
                     <label for="fecha_pago" class="form-label"><i class="fa-solid fa-calendar-day"></i> Fecha de Pago</label>
-                    <input type="date" name="fecha_pago" id="fecha_pago" class="form-control" required>
+                    <input type="date" name="fecha_pago" id="fecha_pago" class="form-control" 
+                           value="{{ old('fecha_pago', $pago->fecha_pago ?? '') }}" 
+                           required>
                 </div>
-
+            
                 <!-- Referencia -->
                 <div class="form-group">
                     <label for="referencia" class="form-label"><i class="fa-solid fa-pen"></i> Referencia o Detalles</label>
-                    <textarea name="referencia" id="referencia" rows="3" class="form-control" placeholder="Escribe detalles o referencia del pago" required></textarea>
+                    <textarea name="referencia" id="referencia" rows="3" class="form-control" 
+                              placeholder="Escribe detalles o referencia del pago">{{ old('referencia', $pago->referencia ?? '') }}</textarea>
                 </div>
-
+            
                 <!-- Comprobante de Pago -->
                 <div class="form-group">
                     <label for="comprobante_pago" class="form-label"><i class="fa-solid fa-camera"></i> Comprobante de Pago</label>
-                    <input type="file" name="comprobante_pago" id="comprobante_pago" class="form-control" accept="image/*" required>
+                    <input type="file" name="comprobante_pago" id="comprobante_pago" class="form-control" accept="image/*">
+                    @if (isset($pago) && $pago->comprobante_pago)
+                        <small class="text-muted" required>Comprobante actual: {{ $pago->comprobante_pago }}</small>
+                    @endif
                 </div>
-
-                <button type="submit" class="btn btn-primary w-100">Agregar Pago</button>
+                <button type="submit" class="btn btn-primary w-100">{{$txtbtn}}</button>
             </form>
 
             <div class="footer">

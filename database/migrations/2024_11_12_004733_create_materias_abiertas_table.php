@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('materias_abiertas', function (Blueprint $table) {
+        Schema::create('materia_abiertas', function (Blueprint $table) {
             $table->string('idMateriaAbierta')->primary();
             $table->string('idMateria');
             $table->string('idPeriodo');

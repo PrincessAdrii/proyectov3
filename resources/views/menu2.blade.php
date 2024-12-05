@@ -30,7 +30,7 @@
           <li><a class="dropdown-item" href="{{route('Carreras.index')}}">Carreras</a></li>
           <li><a class="dropdown-item" href="{{route('Reticulas.index')}}">Retículas</a></li>
           <li><a class="dropdown-item" href="{{route('Materias.index')}}">Materias</a></li>
-          {{-- <li><a class="dropdown-item" href="#">Materias Abiertas</a></li> --}}
+          <li><a class="dropdown-item" href="{{route('MateriasA.index')}}">Materias Abiertas</a></li>
           <li><a class="dropdown-item" href="{{route('PersonalPlazas.index')}}">Personal Plaza</a></li>
           <li><a class="dropdown-item" href="{{route('Personal.index')}}">Personal</a>
           <li><a class="dropdown-item" href="{{route('Edificios.index')}}">Edificios</a>
@@ -50,7 +50,8 @@
                 <div class="d-flex">
                         <li><a class="dropdown-item" href="inicios">Docentes</a></li>
                         <li><a class="dropdown-item" href='iniciosA'>Alumnos</a></li>
-                        <li><a class="dropdown-item" href="{{route('documentos.store')}}">Documentacion de Alumnos</a></li>
+                        
+                     
             <li><a class="dropdown-item" href="{{route('pagos.store')}}">Pago Del Semestre</a></li>
                 </div>
             </div>

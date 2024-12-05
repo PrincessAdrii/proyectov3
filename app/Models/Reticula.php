@@ -19,10 +19,11 @@ class Reticula extends Model
     protected $primaryKey='idReticula';
 
     
-    public function carrera():BelongsTo{
-        return $this->belongsTo(Carrera::class,'idCarrera');
-    }
-    public function materias():HasMany{
-        return $this->hasMany(Materia::class,'idReticula');
-    }
+  
+    // En Reticula.php
+public function materias()
+{
+    return $this->hasMany(Materia::class, 'idReticula');
+}
+
 }

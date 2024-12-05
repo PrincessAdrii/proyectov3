@@ -148,11 +148,12 @@
     <div class="content-container">
         <div class="form-container">
             <h1>Subir Documentos</h1>
-            <form method="POST" action="{{ route('documentos.store') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('documentos.store', $alumno->noctrl) }}" enctype="multipart/form-data">
+
                 @csrf
                 <div class="mb-4 position-relative">
                     <label for="noctrl" class="form-label"><i class="fa-solid fa-id-badge"></i> Número de Control</label>
-                    <input type="text" name="noctrl" id="noctrl" class="form-control" required>
+                    <input type="text" name="noctrl" id="noctrl" class="form-control" value="{{$alumno->noctrl}}" required readonly>
                     <i class="fa-solid fa-file-upload input-icon"></i>
                 </div>
                 <div class="mb-4 position-relative">
